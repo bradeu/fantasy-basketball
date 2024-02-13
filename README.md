@@ -1,27 +1,29 @@
-# Fortune City
-## A Monopoly Game
+# Fantasy Basketball
+## A Basketball Game
 
 **What will the application do?** <br>
-This application is similar to the monopoly game but with an addition of power cards 
-that can move the player more than what the dice decides or the power cards that can 
-allow a player to avoid jail.
+This application was made to simulate real games and predict the
+outcomes of games with the players chosen by the users. This is done
+for users who are curious how their favorite players will do when they are
+teamed up together.
 
 **Who will use it?** <br>
-Everyone will be able to use this, it will be made simple and understandable 
-by people of all ages.
+Avid fan of the every basketball league in the world will be able to use
+this easily to get an accurate prediction on who will win on teams with the
+given players.
 
 **Why is this project of interest to you?** <br>
-I have never made a game before, so this project serves as an exploration to a new field 
-in the world of computer science.
+I am a big fan of the NBA, so I am often curious what will happen
+if my favorite players teamed up with each other or go up against each
+other.
 
 <br>
 
 *User Stories*
-- As a user, I want to be able to roll the dice
-- As a user, I want to be able to move according the number on the dice
-- As a user, I want to go to jail
-- As a user, I want to be able to buy properties
-- As a user, I want to get money deducted when I am in someone else's property
-- As a user, I want to gain money after one round
-- As a user, I want to be able to use move several extra space (with power cards)
-- As a user, I want to be able to avoid jail (with power cards)
+- As a user, I want to be able to create a new team and add it to a list of teams
+- As a user, I want to be able to select a team and add a new player to the team with their statistics
+- As a user, I want to be able to select a team and view a list of the players on that team
+- As a user, I want to be able to select a team and list all the players on that team
+- As a user, I want to be able to get the predicted winners
+- As a user, I want to be able to get each player's predicted scores
+- As a user, I want to be able to put as many teams as possible
