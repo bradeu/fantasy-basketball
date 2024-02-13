@@ -1,5 +1,5 @@
 # Fantasy Basketball
-## A Basketball Game
+## A Basketball Simulation
 
 **What will the application do?** <br>
 This application was made to simulate real games and predict the
