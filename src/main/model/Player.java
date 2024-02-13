@@ -2,17 +2,17 @@ package model;
 
 public class Player {
     private String name;
-    private int ppg; // POINTS PER GAME
-    private int apg; // ASSISTS PER GAME
-    private int rpg; // REBOUNDS PER GAME
-    private int per; // PLAYER EFFECIENCY RATING
-    private int ws; // WIN SHARES
-    private int bpm; // BOX PLUS MINUS
-    private int vorp; // VALUE OVER REPLACEMENT
+    private float ppg; // POINTS PER GAME
+    private float apg; // ASSISTS PER GAME
+    private float rpg; // REBOUNDS PER GAME
+    private float per; // PLAYER EFFECIENCY RATING
+    private float ws; // WIN SHARES
+    private float bpm; // BOX PLUS MINUS
+    private float vorp; // VALUE OVER REPLACEMENT
     private String pos; // POSITION
-    private int ss; // SEASON SCORE
+    private float ss; // SEASON SCORE
 
-    public Player(String name, int ppg, int apg, int rpg, int per, int ws, int bpm, String pos) {
+    public Player(String name, float ppg, float apg, float rpg, float per, float ws, float bpm, String pos) {
         this.name = name;
         this.ppg = ppg;
         this.apg = apg;
@@ -32,7 +32,7 @@ public class Player {
         return pos;
     }
 
-    public int getSs() {
+    public float getSs() {
         return ss;
     }
 }
