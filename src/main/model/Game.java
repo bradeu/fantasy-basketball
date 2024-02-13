@@ -20,9 +20,11 @@ public class Game {
         int winScore = 0;
         int loseScore = 0;
         while (winScore < 140) {
-            winScore += random.nextInt(10);
-            loseScore += random.nextInt(10);
-            System.out.println(winScore - loseScore);
+            int randomScoreOne = random.nextInt(10);
+            int randomScoreTwo = randomScoreOne + random.nextInt(2);
+            winScore += randomScoreTwo;
+            loseScore += randomScoreOne;
+            System.out.println(winScore + "-" + loseScore);
         }
         System.out.println(winTeam.getName() + "wins the match !");
     }
