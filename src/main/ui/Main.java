@@ -22,10 +22,14 @@ public class Main {
 
             Team team = new Team(teamName);
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 3; i++) {
                 System.out.println("Enter player name:");
                 String playerName = scanner.nextLine();
+
+                team.addPlayer(playerName);
             }
+
+            game.addTeam(team);
         }
         game.playGame();
     }

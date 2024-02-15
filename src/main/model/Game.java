@@ -21,22 +21,29 @@ public class Game {
         int loseScore = 0;
         while (winScore < 140) {
             int randomScoreOne = random.nextInt(10);
-            int randomScoreTwo = randomScoreOne + random.nextInt(2);
+            int randomScoreTwo = randomScoreOne + 1 + random.nextInt(1);
             winScore += randomScoreTwo;
             loseScore += randomScoreOne;
             System.out.println(winScore + "-" + loseScore);
         }
-        System.out.println(winTeam.getName() + "wins the match !");
+        System.out.println(winTeam.getName() + " wins the match !");
     }
 
     public String playGame() {
-        Team winner = new Team("no winner");
-        for (Team team : teamList) {
+        if (teamList.size() <= 2) {
+            return "Not enough teams to play a game.";
+        }
+
+        Team winner = teamList.get(0);
+        for (int i = 1; i < teamList.size(); i++) {
+            Team team = teamList.get(i);
             if (team.getRating() > winner.getRating()) {
                 simGame(team);
                 winner = team;
+            } else {
+                simGame(winner);
             }
         }
-        return winner.getName() + "wins the game !";
+        return winner.getName() + " wins the game !";
     }
 }
