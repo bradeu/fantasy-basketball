@@ -25,6 +25,42 @@ public class Player {
         this.ss = ppg + apg + rpg + per + ws + bpm;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public double getPpg() {
+        return ppg;
+    }
+
+    public double getApg() {
+        return apg;
+    }
+
+    public double getRpg() {
+        return rpg;
+    }
+
+    public double getPer() {
+        return per;
+    }
+
+    public double getWs() {
+        return ws;
+    }
+
+    public double getBpm() {
+        return bpm;
+    }
+
+    public double getVorp() {
+        return vorp;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
     public double getSs() {
         return ss;
     }

@@ -9,7 +9,7 @@ public class Team {
 
     private ArrayList<Player> playerList;
     private String name;
-    private float rating;
+    private double rating;
 
     public Team(String name) {
         this.playerList = new ArrayList<Player>();
@@ -21,7 +21,7 @@ public class Team {
         return name;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
