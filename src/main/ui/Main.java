@@ -12,7 +12,7 @@ public class Main {
 
         Game game = new Game();
 
-        System.out.println("Enter number of teams:");
+        System.out.println("Enter number of teams (minimum of 2):");
         int teamAmt = scanner.nextInt();
         scanner.nextLine();
 
@@ -22,13 +22,11 @@ public class Main {
 
             Team team = new Team(teamName);
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 2; i++) {
                 System.out.println("Enter player name:");
                 String playerName = scanner.nextLine();
-
                 team.addPlayer(playerName);
             }
-
             game.addTeam(team);
         }
         game.playGame();

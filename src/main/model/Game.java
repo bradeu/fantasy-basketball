@@ -8,42 +8,43 @@ public class Game {
     private ArrayList<Team> teamList;
 
     public Game() {
-        this.teamList = new ArrayList<Team>();
+        this.teamList = new ArrayList<>();
     }
 
     public void addTeam(Team team) {
         teamList.add(team);
     }
 
-    public void simGame(Team winTeam) {
+    public void simGame(Team winTeam, Team loseTeam) {
         Random random = new Random();
-        int winScore = 0;
-        int loseScore = 0;
-        while (winScore < 140) {
+        int scoreOne = 0;
+        int scoreTwo = 0;
+        while ((scoreOne < 130 && scoreTwo < 130) || scoreOne == scoreTwo) {
             int randomScoreOne = random.nextInt(10);
-            int randomScoreTwo = randomScoreOne + 1 + random.nextInt(1);
-            winScore += randomScoreTwo;
-            loseScore += randomScoreOne;
-            System.out.println(winScore + "-" + loseScore);
+            int randomScoreTwo = random.nextInt(10);
+            scoreOne += randomScoreOne;
+            scoreTwo += randomScoreTwo;
+            System.out.println(scoreOne + "-" + scoreTwo);
         }
-        System.out.println(winTeam.getName() + " wins the match !");
+        System.out.println(winTeam.getName() + " wins the match against " + loseTeam.getName() + "!");
     }
 
-    public String playGame() {
-        if (teamList.size() <= 2) {
-            return "Not enough teams to play a game.";
+    public void playGame() {
+        if (teamList.size() < 2) {
+            System.out.println("Not enough teams to play a game");
+            return;
         }
 
         Team winner = teamList.get(0);
         for (int i = 1; i < teamList.size(); i++) {
             Team team = teamList.get(i);
             if (team.getRating() > winner.getRating()) {
-                simGame(team);
+                simGame(team, winner);
                 winner = team;
             } else {
-                simGame(winner);
+                simGame(winner, team);
             }
         }
-        return winner.getName() + " wins the game !";
+        System.out.println(winner.getName() + " wins the game !");
     }
 }
