@@ -11,6 +11,8 @@ public class Team {
     private String name;
     private double rating;
 
+    private String fileName = "data/players.csv";
+
     public Team(String name) {
         this.playerList = new ArrayList<Player>();
         this.name = name;
@@ -26,7 +28,7 @@ public class Team {
     }
 
     public void addPlayer(String playerName) {
-        Player player = findPlayerByName("data/players.csv", playerName);
+        Player player = findPlayerByName(fileName, playerName);
         playerList.add(player);
         rating += player.getSs();
     }

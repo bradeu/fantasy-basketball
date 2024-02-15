@@ -18,4 +18,10 @@ public class TeamTest {
         assertEquals("test", team.getName());
         assertEquals(0, team.getRating());
     }
+
+    @Test
+    void testAddTeam() {
+        Player player = new Player("test", 0, 0, 0, 0, 0, 0, "G");
+
+    }
 }

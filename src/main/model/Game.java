@@ -11,6 +11,10 @@ public class Game {
         this.teamList = new ArrayList<>();
     }
 
+    public boolean isEmpty() {
+        return teamList.isEmpty();
+    }
+
     public void addTeam(Team team) {
         teamList.add(team);
     }

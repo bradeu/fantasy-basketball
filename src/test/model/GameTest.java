@@ -13,4 +13,9 @@ public class GameTest {
         game = new Game();
     }
 
+    @Test
+    void testContructor() {
+        assertTrue(game.isEmpty());
+    }
+
 }
