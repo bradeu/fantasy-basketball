@@ -33,12 +33,16 @@ public class Team {
         rating += player.getSs();
     }
 
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
     public static Player findPlayerByName(String filename, String searchName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 8 && parts[0].equalsIgnoreCase(searchName)) {
+                if (parts.length >= 9 && parts[0].equalsIgnoreCase(searchName)) {
                     String name = parts[0];
                     double ppg = Double.parseDouble(parts[1]);
                     double apg = Double.parseDouble(parts[2]);
@@ -46,8 +50,9 @@ public class Team {
                     double per = Double.parseDouble(parts[4]);
                     double ws = Double.parseDouble(parts[5]);
                     double bpm = Double.parseDouble(parts[6]);
-                    String pos = parts[7];
-                    return new Player(name, ppg, apg, rpg, per, ws, bpm, pos);
+                    double vorp = Double.parseDouble(parts[7]);
+                    String pos = parts[8];
+                    return new Player(name, ppg, apg, rpg, per, ws, bpm, vorp, pos);
                 }
             }
         } catch (IOException e) {

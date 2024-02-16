@@ -10,7 +10,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setup() {
-        player = new Player("test", 0, 0, 0, 0, 0, 0, "G");
+        player = new Player("test", 0, 0, 0, 0, 0, 0, 0, "G");
     }
 
     @Test
@@ -22,6 +22,8 @@ public class PlayerTest {
         assertEquals(0, player.getPer());
         assertEquals(0, player.getWs());
         assertEquals(0, player.getBpm());
+        assertEquals(0, player.getVorp());
         assertEquals("G", player.getPos());
+        assertEquals(0, player.getSs());
     }
 }

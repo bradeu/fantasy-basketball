@@ -12,8 +12,8 @@ public class Player {
     private String pos; // POSITION
     private double ss; // SEASON SCORE
 
-    public Player(String name, double ppg, double apg, double rpg, double per, double ws, double bpm, String pos) {
-
+    public Player(String name, double ppg, double apg, double rpg, double per, double ws, double bpm,
+                  double vorp, String pos) {
         this.name = name;
         this.ppg = ppg;
         this.apg = apg;
@@ -22,7 +22,8 @@ public class Player {
         this.ws = ws;
         this.bpm = bpm;
         this.pos = pos;
-        this.ss = ppg + apg + rpg + per + ws + bpm;
+        this.vorp = vorp;
+        this.ss = ppg + apg + rpg + per + ws + bpm + vorp;
     }
 
     public String getName() {
