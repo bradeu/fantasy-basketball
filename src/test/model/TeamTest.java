@@ -35,6 +35,8 @@ public class TeamTest {
         ArrayList<Player> players = team.getPlayerList();
         Player player = players.get(0);
 
+        assertEquals(0+player.getSs(), team.getRating());
+
         assertEquals("Stephen Curry", player.getName());
         assertEquals(28.0, player.getPpg());
         assertEquals(4.9, player.getApg());
@@ -74,7 +76,7 @@ public class TeamTest {
 
     @Test
     void testFindPlayerByNameExistsCaseSensitive() {
-        Player player = team.findPlayerByName("data/players.csv","joel embiid");
+        Player player = team.findPlayerByName("data/test.csv","joel embiid");
 
         assertNotNull(player);
 
@@ -95,6 +97,4 @@ public class TeamTest {
         Player player = team.findPlayerByName("data/ben.csv","Ben");
         assertNull(player);
     }
-
-
 }

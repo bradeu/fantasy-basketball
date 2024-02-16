@@ -29,8 +29,8 @@ public class Team {
 
     public void addPlayer(String playerName) {
         Player player = findPlayerByName(filePath, playerName);
-        rating += player.getSs();
         playerList.add(player);
+        rating += player.getSs();
     }
 
     public ArrayList<Player> getPlayerList() {
