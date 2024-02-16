@@ -23,6 +23,8 @@ public class TeamTest {
 
     @Test
     void testAddPlayer() {
+        assertEquals(0, team.getRating());
+
         String playerName = "Stephen Curry";
         team.addPlayer(playerName);
 
@@ -44,9 +46,12 @@ public class TeamTest {
     }
 
     @Test
-    void testFindPlayerByName() {
+    void testFindPlayerByNameExists() {
         Player player = team.findPlayerByName("Lebron James");
 
+        assertNotNull(player);
+
+        assertEquals("Lebron James", player.getName());
         assertEquals(24.8, player.getPpg());
         assertEquals(7.8, player.getApg());
         assertEquals(7.2, player.getRpg());
@@ -57,4 +62,30 @@ public class TeamTest {
         assertEquals("F", player.getPos());
         assertEquals(222.91, player.getSs());
     }
+
+    @Test
+    void testFindPlayerByNameNotExists() {
+        Player player = team.findPlayerByName("Ben");
+        assertNull(player);
+
+    }
+
+    @Test
+    void testFindPlayerByNameExistsCaseSensitive() {
+        Player player = team.findPlayerByName("stephen curry");
+
+        assertNotNull(player);
+
+        assertEquals("Stephen Curry", player.getName());
+        assertEquals(28.0, player.getPpg());
+        assertEquals(4.9, player.getApg());
+        assertEquals(4.4, player.getRpg());
+        assertEquals(21.7, player.getPer());
+        assertEquals(5.3, player.getWs());
+        assertEquals(6.1, player.getBpm());
+        assertEquals(68.83, player.getVorp());
+        assertEquals("G", player.getPos());
+        assertEquals(139.23, player.getSs());
+    }
+
 }
