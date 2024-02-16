@@ -92,8 +92,38 @@ public class TeamTest {
     }
 
     @Test
-    void testFindPlayerByNameEmptyCSV() {
-        Player player = team.findPlayerByName("data/empty.csv","kyrie irving");
+    void testFindPlayerByNameTestCSV() {
+        Player player = team.findPlayerByName("data/test.csv","joel embiid");
+
+        assertNotNull(player);
+
+        assertEquals("Joel Embiid", player.getName());
+        assertEquals(35.3, player.getPpg());
+        assertEquals(5.7, player.getApg());
+        assertEquals(11.3, player.getRpg());
+        assertEquals(34.3, player.getPer());
+        assertEquals(6.8, player.getWs());
+        assertEquals(11.83, player.getBpm());
+        assertEquals(30.91, player.getVorp());
+        assertEquals("C", player.getPos());
+        assertEquals(136.14, player.getSs());
+    }
+
+    @Test
+    void testFindPlayerByNameTestCSV2() {
+        Player player = team.findPlayerByName("data/test2.csv","joel embiid");
+        assertNull(player);
+    }
+
+    @Test
+    void testFindPlayerByNameTestCSV3() {
+        Player player = team.findPlayerByName("data/test3.csv","joel embiid");
+        assertNull(player);
+    }
+
+    @Test
+    void testFindPlayerByNameTestCSV4() {
+        Player player = team.findPlayerByName("data/test4.csv","joel embiid");
         assertNull(player);
     }
 }
