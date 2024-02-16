@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+// Represents a running basketball game
 public class GameApp {
 
+    //EFFECTS: runs the basketball game
     public GameApp() {
         runGame();
     }
 
+
+    //EFFECTS: prompt the user to enter number of teams, player(s) per team, team name(s), and player names and
+    //         run the game with that specifications
     public void runGame() {
         Scanner scanner = new Scanner(System.in);
 
@@ -42,6 +47,7 @@ public class GameApp {
         playGame(game);
     }
 
+    //EFFECTS: prints out a simulation of a game with scores and match winner declaration
     public void simGame(Team winTeam, Team loseTeam) {
         Random random = new Random();
         int scoreOne = 0;
@@ -56,6 +62,9 @@ public class GameApp {
         System.out.println(winTeam.getName() + " wins the match against " + loseTeam.getName() + "!");
     }
 
+    //REQUIRES: teamList.size() < 2
+    //EFFECTS: looks into the teamList in game and checks which team has the highest rating and runs every game through
+    //         simGame, also prints out the winner of the overall game
     public void playGame(Game game) {
 
         ArrayList<Team> teamList = game.getTeamList();
