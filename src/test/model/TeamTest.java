@@ -71,7 +71,6 @@ public class TeamTest {
     void testFindPlayerByNameNotExists() {
         Player player = team.findPlayerByName("data/players.csv","Ben");
         assertNull(player);
-
     }
 
     @Test
@@ -90,5 +89,11 @@ public class TeamTest {
         assertEquals(30.91, player.getVorp());
         assertEquals("C", player.getPos());
         assertEquals(136.14, player.getSs());
+    }
+
+    @Test
+    void testFindPlayerByNameEmptyCSV() {
+        Player player = team.findPlayerByName("data/empty.csv","kyrie irving");
+        assertNull(player);
     }
 }
