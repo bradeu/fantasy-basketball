@@ -2,6 +2,8 @@ package model;
 
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -16,6 +18,15 @@ public class GameTest {
     @Test
     void testContructor() {
         assertTrue(game.isEmpty());
+    }
+
+    @Test
+    void testAddTeam() {
+        Team team = new Team("test");
+
+        game.addTeam(team);
+        ArrayList<Team> teams = game.getTeamList();
+        assertTrue(teams.contains(team));
     }
 
 }

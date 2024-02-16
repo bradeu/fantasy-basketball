@@ -40,4 +40,19 @@ public class TeamTest {
         assertEquals("G", player.getPos());
         assertEquals(139.23, player.getSs());
     }
+
+    @Test
+    void testFindPlayerByName() {
+        Player player = team.findPlayerByName("Lebron James");
+
+        assertEquals(24.8, player.getPpg());
+        assertEquals(7.8, player.getApg());
+        assertEquals(7.2, player.getRpg());
+        assertEquals(22.4, player.getPer());
+        assertEquals(5, player.getWs());
+        assertEquals(5.8, player.getBpm());
+        assertEquals(149.91, player.getVorp());
+        assertEquals("F", player.getPos());
+        assertEquals(222.91, player.getSs());
+    }
 }

@@ -11,10 +11,8 @@ public class Team {
     private String name;
     private double rating;
 
-    private String fileName = "data/players.csv";
-
     public Team(String name) {
-        this.playerList = new ArrayList<Player>();
+        this.playerList = new ArrayList<>();
         this.name = name;
         this.rating = 0;
     }
@@ -28,7 +26,7 @@ public class Team {
     }
 
     public void addPlayer(String playerName) {
-        Player player = findPlayerByName(fileName, playerName);
+        Player player = findPlayerByName(playerName);
         playerList.add(player);
         rating += player.getSs();
     }
@@ -37,8 +35,8 @@ public class Team {
         return playerList;
     }
 
-    public static Player findPlayerByName(String filename, String searchName) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    public static Player findPlayerByName(String searchName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("data/players.csv"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
