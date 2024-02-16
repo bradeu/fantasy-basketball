@@ -39,6 +39,8 @@ public class TeamTest {
         assertEquals(68.83, player.getVorp());
         assertEquals("G", player.getPos());
         assertEquals(139.23, player.getSs());
+
+        assertEquals(139.23, team.getRating());
     }
 
     @Test
