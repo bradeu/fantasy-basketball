@@ -48,7 +48,7 @@ public class Team {
 
     //REQUIRES: searchName should only be from players.csv
     //EFFECTS: search for the player with searchName and return the player
-    public static Player findPlayerByName(String filePath, String searchName) {
+    public Player findPlayerByName(String filePath, String searchName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
