@@ -18,7 +18,9 @@ public class TeamTest {
     @Test
     void testContructor() {
         assertEquals("test", team.getName());
+        assertEquals(new ArrayList<>(), team.getPlayerList());
         assertEquals(0, team.getRating());
+        assertTrue(team.getPlayerList().isEmpty());
     }
 
     @Test
@@ -42,7 +44,7 @@ public class TeamTest {
         assertEquals("G", player.getPos());
         assertEquals(139.23, player.getSs());
 
-        assertEquals(139.23, team.getRating());
+        assertEquals(player.getSs(), team.getRating());
     }
 
     @Test
