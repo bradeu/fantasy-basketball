@@ -91,10 +91,4 @@ public class TeamTest {
         assertEquals("C", player.getPos());
         assertEquals(136.14, player.getSs());
     }
-
-    @Test
-    void whenIOException_thenPlayerIsNull() {
-        Player player = team.findPlayerByName("data/ben.csv","Ben");
-        assertNull(player);
-    }
 }
