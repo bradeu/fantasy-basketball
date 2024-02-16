@@ -126,4 +126,10 @@ public class TeamTest {
         Player player = team.findPlayerByName("data/test4.csv","joel embiid");
         assertNull(player);
     }
+
+    @Test
+    void testFindPlayerByNameNoCSV() {
+        Player player = team.findPlayerByName("data/tests.csv","joel embiid");
+        assertNull(player);
+    }
 }
