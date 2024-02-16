@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-// Represents a basketball game
+// Represents a basketball game with an arbitrary amount of teams
 public class Game {
 
     private ArrayList<Team> teamList;
