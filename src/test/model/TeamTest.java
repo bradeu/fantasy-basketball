@@ -49,7 +49,7 @@ public class TeamTest {
 
     @Test
     void testFindPlayerByNameExists() {
-        Player player = team.findPlayerByName("Lebron James");
+        Player player = team.findPlayerByName("data/players.csv","Lebron James");
 
         assertNotNull(player);
 
@@ -67,14 +67,14 @@ public class TeamTest {
 
     @Test
     void testFindPlayerByNameNotExists() {
-        Player player = team.findPlayerByName("Ben");
+        Player player = team.findPlayerByName("data/players.csv","Ben");
         assertNull(player);
 
     }
 
     @Test
     void testFindPlayerByNameExistsCaseSensitive() {
-        Player player = team.findPlayerByName("stephen curry");
+        Player player = team.findPlayerByName("data/players.csv","stephen curry");
 
         assertNotNull(player);
 
@@ -89,5 +89,12 @@ public class TeamTest {
         assertEquals("G", player.getPos());
         assertEquals(139.23, player.getSs());
     }
+
+    @Test
+    void whenIOException_thenPlayerIsNull() {
+        Player player = team.findPlayerByName("data/ben.csv","Ben");
+        assertNull(player);
+    }
+
 
 }
