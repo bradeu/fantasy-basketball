@@ -25,5 +25,5 @@ other.
 - As a user, I want to be able to select a team and view a list of the players on that team
 - As a user, I want to be able to select a team and list all the players on that team
 - As a user, I want to be able to get the predicted winners
-- As a user, I want to be able to get each player's predicted scores
+- As a user, I want to be able to get each team's predicted scores
 - As a user, I want to be able to put as many teams as possible
