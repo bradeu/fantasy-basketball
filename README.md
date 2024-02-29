@@ -21,9 +21,8 @@ other.
 
 *User Stories*
 - As a user, I want to be able to create a new team and add it to a list of teams
-- As a user, I want to be able to select a team and add a new player to the team with their statistics
-- As a user, I want to be able to select a team and view a list of the players on that team
-- As a user, I want to be able to select a team and list all the players on that team
+- As a user, I want to be able to select a team and add a new player to the team
+- As a user, I want to be able to list all the teams in the game
 - As a user, I want to be able to get the predicted winners
 - As a user, I want to be able to get each team's predicted scores
 - As a user, I want to be able to put as many teams as possible
