@@ -3,6 +3,7 @@ package ui;
 import model.Game;
 import model.Team;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,39 +13,31 @@ public class GameApp {
 
     //EFFECTS: runs the basketball game
     public GameApp() {
-        runGame();
+        runApp();
     }
 
-
-    //EFFECTS: prompt the user to enter number of teams, player(s) per team, team name(s), and player names and
-    //         run the game with that specifications
-    public void runGame() {
+    public void runApp() {
         Scanner scanner = new Scanner(System.in);
-
-        Game game = new Game();
-
-        System.out.println("Enter number of teams (minimum of 2):");
-        int teamAmt = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Enter number of players per team:");
-        int playerAmt = scanner.nextInt();
-        scanner.nextLine();
-
-        for (int index = 0; index < teamAmt; index++) {
-            System.out.println("Enter team name:");
-            String teamName = scanner.nextLine();
-
-            Team team = new Team(teamName);
-
-            for (int i = 0; i < playerAmt; i++) {
-                System.out.println("Enter player name:");
-                String playerName = scanner.nextLine();
-                team.addPlayer(playerName);
+        Game game = makeGame();
+        int response;
+        do {
+            System.out.println("Please enter a number: (1) Play game (2) Show teams (3) Quit application");
+            response = scanner.nextInt();
+            scanner.nextLine(); // Clear the newline from the buffer
+            switch (response) {
+                case 1:
+                    playGame(game);
+                    break;
+                case 2:
+                    game.getTeamList().forEach(team -> System.out.println(team.getName()));
+                    break;
+                case 3:
+                    System.out.println("Thank you for playing !");
+                    break;
+                default:
+                    System.out.println("Invalid response please try again !");
             }
-            game.addTeam(team);
-        }
-        playGame(game);
+        } while (response != 3);
     }
 
     //EFFECTS: prints out a simulation of a game with scores and match winner declaration
@@ -85,5 +78,36 @@ public class GameApp {
             }
         }
         System.out.println(winner.getName() + " wins the game !");
+    }
+
+    //EFFECTS: prompt the user to enter number of teams, player(s) per team, team name(s), and player names and
+    //         make the game with that specifications
+    public Game makeGame() {
+        Scanner scanner = new Scanner(System.in);
+        Game game = new Game();
+
+        System.out.println("Enter number of teams (minimum of 2):");
+        int teamAmt = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Enter number of players per team:");
+        int playerAmt = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int index = 0; index < teamAmt; index++) {
+            System.out.println("Enter team name:");
+            String teamName = scanner.nextLine();
+
+            Team team = new Team(teamName);
+
+            for (int i = 0; i < playerAmt; i++) {
+                System.out.println("Enter player name:");
+                String playerName = scanner.nextLine();
+                team.addPlayer(playerName);
+            }
+            game.addTeam(team);
+        }
+
+        return game;
     }
 }
