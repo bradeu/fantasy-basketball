@@ -26,3 +26,5 @@ other.
 - As a user, I want to be able to get the predicted winners
 - As a user, I want to be able to get each team's predicted scores
 - As a user, I want to be able to put as many teams as possible
+- As a user, I want to be able to save my teams and its players into a file (if I so choose)
+- As a user, I want to be able to load my teams and its players from a file (if I so choose)

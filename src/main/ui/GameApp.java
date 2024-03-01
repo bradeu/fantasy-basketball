@@ -16,6 +16,8 @@ public class GameApp {
         runApp();
     }
 
+    private static final String JSON_STORE = "./data/game.json";
+
     //EFFECTS: runs the game based on the user input whether to show the teams or play the game or quit application
     public void runApp() {
         Scanner scanner = new Scanner(System.in);
