@@ -1,7 +1,12 @@
 package model;
 
+import persistence.Writable;
+
+import org.json.*;
+import persistence.Writable;
+
 // Represents a player in the basketball game
-public class Player {
+public class Player implements Writable {
     private String name;
     private double ppg; // POINTS PER GAME
     private double apg; // ASSISTS PER GAME
@@ -76,5 +81,12 @@ public class Player {
     //EFFECTS: return the season score of the player
     public double getSs() {
         return ss;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        return json;
     }
 }

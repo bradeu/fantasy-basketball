@@ -5,8 +5,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.json.*;
+import persistence.Writable;
+
 // Represents a team that contains an arbitrary amount of players
-public class Team {
+public class Team implements Writable {
 
     private ArrayList<Player> playerList;
     private String name;
@@ -70,5 +73,24 @@ public class Team {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("players", playersToJson());
+        return json;
+    }
+
+    // EFFECTS: returns players in this team as a JSON array
+    private JSONArray playersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Player p : playerList) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
     }
 }
