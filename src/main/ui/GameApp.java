@@ -73,7 +73,7 @@ public class GameApp {
 
 
     //EFFECTS: prints out a simulation of a game with scores and match winner declaration
-    public void simGame(Team winTeam, Team loseTeam) {
+    private void simGame(Team winTeam, Team loseTeam) {
         Random random = new Random();
         int scoreOne = 0;
         int scoreTwo = 0;
@@ -90,7 +90,7 @@ public class GameApp {
     //REQUIRES: teamList.size() < 2
     //EFFECTS: looks into the teamList in game and checks which team has the highest rating and runs every game through
     //         simGame, also prints out the winner of the overall game
-    public void playGame(Game game) {
+    private void playGame(Game game) {
 
         ArrayList<Team> teamList = game.getTeamList();
 
@@ -113,7 +113,7 @@ public class GameApp {
     }
 
     // EFFECTS: adds a team with the playerAmt into the game
-    public Game addTeam(Game game, int playerAmt) {
+    private Game addTeam(Game game, int playerAmt) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter team name:");
         String teamName = scanner.nextLine();
