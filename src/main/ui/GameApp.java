@@ -1,6 +1,7 @@
 package ui;
 
 import model.Game;
+import model.Player;
 import model.Team;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -33,13 +34,13 @@ public class GameApp {
             displayMenu();
             response = scanner.nextInt();
             game = handleResponse(response, game, scanner);
-        } while (response != 6);
+        } while (response != 7);
     }
 
     //EFFECTS: displays the options for the user to choose
     private void displayMenu() {
-        System.out.println("Please enter a number:\n(1)Play game\n(2)Show team\n"
-                + "(3)Add team\n(4)Load previous game\n(5)Save game\n(6)Quit application");
+        System.out.println("Please enter a number:\n(1)Play game\n(2)Show teams\n(3)Show players\n"
+                + "(4)Add team\n(5)Load previous game\n(6)Save game\n(7)Quit application");
     }
 
     //MODIFIES: this
@@ -50,13 +51,15 @@ public class GameApp {
             break;
             case 2 : game.getTeamList().forEach(team -> System.out.println(team.getName()));
             break;
-            case 3 : game = addTeamPrompt(game, scanner);
+            case 3 : showPlayers(game);
             break;
-            case 4 : game = loadGame();
+            case 4 : game = addTeamPrompt(game, scanner);
             break;
-            case 5 : saveGame(game);
+            case 5 : game = loadGame();
             break;
-            case 6 : System.out.println("Thank you for playing !");
+            case 6 : saveGame(game);
+            break;
+            case 7 : System.out.println("Thank you for playing !");
             break;
             default : System.out.println("Invalid response please try again !");
         }
@@ -127,6 +130,27 @@ public class GameApp {
         }
         game.addTeam(team);
         return game;
+    }
+
+    //EFFECTS: show the players in the given team by the users.
+    private void showPlayers(Game game) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter team name:");
+        String teamName = scanner.nextLine();
+        Boolean found = false;
+
+        for (Team team : game.getTeamList()) {
+            if (team.getName().equals(teamName)) {
+                found = true;
+                for (Player player : team.getPlayerList()) {
+                    System.out.println(player.getName()); // Use getName() to print player name
+                }
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Team not found!");
+        }
     }
 
     //Citation: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
