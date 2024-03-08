@@ -32,6 +32,7 @@ public class Game implements Writable {
         return teamList;
     }
 
+    //Citation: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

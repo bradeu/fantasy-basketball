@@ -36,11 +36,14 @@ public class GameApp {
         } while (response != 6);
     }
 
+    //EFFECTS: displays the options for the user to choose
     private void displayMenu() {
         System.out.println("Please enter a number:\n(1)Play game\n(2)Show team\n"
                 + "(3)Add team\n(4)Load previous game\n(5)Save game\n(6)Quit application");
     }
 
+    //MODIFIES: this
+    //EFFECTS: handle the game based on the response
     private Game handleResponse(int response, Game game, Scanner scanner) {
         switch (response) {
             case 1 : playGame(game);
@@ -60,6 +63,8 @@ public class GameApp {
         return game;
     }
 
+    //MODIFIES: this
+    //EFFECTS: add team to the game based on the player amount given by the user
     private Game addTeamPrompt(Game game, Scanner scanner) {
         System.out.println("Enter number of players for this team:");
         int playerAmt = scanner.nextInt();
@@ -124,6 +129,7 @@ public class GameApp {
         return game;
     }
 
+    //Citation: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: saves the game to file
     private void saveGame(Game game) {
         try {
@@ -136,6 +142,7 @@ public class GameApp {
         }
     }
 
+    //Citation: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: loads game from file
     private Game loadGame() {

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//Citation: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 public class JsonTest {
     protected void checkTeam(String teamName, ArrayList<String> playerNameList, Team team) {
         assertEquals(teamName, team.getName());
