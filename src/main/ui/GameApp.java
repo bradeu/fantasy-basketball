@@ -27,37 +27,43 @@ public class GameApp {
     //EFFECTS: runs the game based on the user input whether to show the teams or play the game or quit application
     public void runApp() {
         Scanner scanner = new Scanner(System.in);
-        int playerAmt;
         Game game = new Game();
         int response;
         do {
-            System.out.println("Please enter a number:\n(1)Play game\n(2)Show team\n(3)Add team\n(4)Load previous game\n(5)Save game\n(6)Quit application");
+            displayMenu();
             response = scanner.nextInt();
-            switch (response) {
-                case 1:
-                    playGame(game);
-                    break;
-                case 2:
-                    game.getTeamList().forEach(team -> System.out.println(team.getName()));
-                    break;
-                case 3:
-                    System.out.println("Enter number of players for this team:");
-                    playerAmt = scanner.nextInt();
-                    game = addTeam(game, playerAmt);
-                    break;
-                case 4:
-                    game = loadGame();
-                    break;
-                case 5:
-                    saveGame(game);
-                    break;
-                case 6:
-                    System.out.println("Thank you for playing !");
-                    break;
-                default:
-                    System.out.println("Invalid response please try again !");
-            }
+            game = handleResponse(response, game, scanner);
         } while (response != 6);
+    }
+
+    private void displayMenu() {
+        System.out.println("Please enter a number:\n(1)Play game\n(2)Show team\n"
+                + "(3)Add team\n(4)Load previous game\n(5)Save game\n(6)Quit application");
+    }
+
+    private Game handleResponse(int response, Game game, Scanner scanner) {
+        switch (response) {
+            case 1 : playGame(game);
+            break;
+            case 2 : game.getTeamList().forEach(team -> System.out.println(team.getName()));
+            break;
+            case 3 : game = addTeamPrompt(game, scanner);
+            break;
+            case 4 : game = loadGame();
+            break;
+            case 5 : saveGame(game);
+            break;
+            case 6 : System.out.println("Thank you for playing !");
+            break;
+            default : System.out.println("Invalid response please try again !");
+        }
+        return game;
+    }
+
+    private Game addTeamPrompt(Game game, Scanner scanner) {
+        System.out.println("Enter number of players for this team:");
+        int playerAmt = scanner.nextInt();
+        return addTeam(game, playerAmt);
     }
 
 
