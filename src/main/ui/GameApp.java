@@ -2,21 +2,27 @@ package ui;
 
 import model.Game;
 import model.Team;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
-import java.awt.print.Book;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 // Represents a running basketball game
 public class GameApp {
+    private static final String JSON_STORE = "./data/game.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //EFFECTS: runs the basketball game
-    public GameApp() {
+    public GameApp() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runApp();
     }
-
-    private static final String JSON_STORE = "./data/game.json";
 
     //EFFECTS: runs the game based on the user input whether to show the teams or play the game or quit application
     public void runApp() {
@@ -26,20 +32,31 @@ public class GameApp {
         Game game = makeGame(playerAmt);
         int response;
         do {
-            System.out.println("Please enter a number: (1) Play game (2) Show teams (3) Add team (4) Quit application");
+            System.out.println("Please enter a number:\n(1)Play game\n(2)Show team\n(3)Add team\n(4)Load previous game\n(5)Save game\n(6)Quit application");
             response = scanner.nextInt();
             switch (response) {
-                case 1 : playGame(game);
-                break;
-                case 2 : game.getTeamList().forEach(team -> System.out.println(team.getName()));
-                break;
-                case 3 : game = addTeam(game, playerAmt);
-                break;
-                case 4 : System.out.println("Thank you for playing !");
-                break;
-                default : System.out.println("Invalid response please try again !");
+                case 1:
+                    playGame(game);
+                    break;
+                case 2:
+                    game.getTeamList().forEach(team -> System.out.println(team.getName()));
+                    break;
+                case 3:
+                    game = addTeam(game, playerAmt);
+                    break;
+                case 4:
+                    game = loadGame();
+                    break;
+                case 5:
+                    saveGame(game);
+                    break;
+                case 6:
+                    System.out.println("Thank you for playing !");
+                    break;
+                default:
+                    System.out.println("Invalid response please try again !");
             }
-        } while (response != 4);
+        } while (response != 6);
     }
 
 
@@ -113,6 +130,31 @@ public class GameApp {
             team.addPlayer(playerName);
         }
         game.addTeam(team);
+        return game;
+    }
+
+    // EFFECTS: saves the game to file
+    private void saveGame(Game game) {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(game);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads game from file
+    private Game loadGame() {
+        Game game = new Game();
+        try {
+            game = jsonReader.read();
+            System.out.println("Game loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
         return game;
     }
 }

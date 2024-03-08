@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Game;
 import model.Team;
 
 import java.io.IOException;
@@ -21,10 +22,10 @@ public class JsonReader {
 
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Team read() throws IOException {
+    public Game read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseTeam(jsonObject);
+        return parseGame(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -38,28 +39,42 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
-    private Team parseTeam(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        Team team = new Team(name);
-        addPlayers(team, jsonObject);
-        return team;
-    }
+//    // EFFECTS: parses workroom from JSON object and returns it
+//    private Team parseTeam(JSONObject jsonObject) {
+//        String name = jsonObject.getString("name");
+//        Team team = new Team(name);
+//        addPlayers(team, jsonObject);
+//        return team;
+//    }
+//
+//    // MODIFIES: wr
+//    // EFFECTS: parses thingies from JSON object and adds them to workroom
+//    private void addPlayers(Team team, JSONObject jsonObject) {
+//        JSONArray jsonArray = jsonObject.getJSONArray("players");
+//        for (Object json : jsonArray) {
+//            JSONObject nextPlayer = (JSONObject) json;
+//            addPlayer(team, nextPlayer);
+//        }
+//    }
+//
+//    // MODIFIES: wr
+//    // EFFECTS: parses thingy from JSON object and adds it to workroom
+//    private void addPlayer(Team team, JSONObject jsonObject) {
+//        String name = jsonObject.getString("name");
+//        team.addPlayer(name);
+//    }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
-    private void addPlayers(Team team, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("players");
-        for (Object json : jsonArray) {
-            JSONObject nextPlayer = (JSONObject) json;
-            addPlayer(team, nextPlayer);
+    private Game parseGame(JSONObject jsonObject) {
+        Game game = new Game();
+        for (Object json1 : jsonObject.getJSONArray("teamList")) {
+            JSONObject teamObject = (JSONObject) json1;
+            Team team = new Team(teamObject.getString("name"));
+            for (Object json2 : teamObject.getJSONArray("playerList")) {
+                JSONObject playerObject = (JSONObject) json2;
+                team.addPlayer(playerObject.getString("name"));
+            }
+            game.addTeam(team);
         }
-    }
-
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
-    private void addPlayer(Team team, JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        team.addPlayer(name);
+        return game;
     }
 }

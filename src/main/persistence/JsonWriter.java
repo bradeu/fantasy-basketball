@@ -1,11 +1,11 @@
 package persistence;
 
-import model.Team;
+import model.Game;
 import org.json.JSONObject;
 
 import java.io.*;
 
-// Represents a writer that writes JSON representation of Team to file
+// Represents a writer that writes JSON representation of Game to file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -24,9 +24,9 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
-    public void write(Team team) {
-        JSONObject json = team.toJson();
+    // EFFECTS: writes JSON representation of Game to file
+    public void write(Game game) {
+        JSONObject json = game.toJson();
         saveToFile(json.toString(TAB));
     }
 

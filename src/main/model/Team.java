@@ -79,7 +79,7 @@ public class Team implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
-        json.put("players", playersToJson());
+        json.put("playerList", playersToJson());
         return json;
     }
 

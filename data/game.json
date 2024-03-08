@@ -1,0 +1,21 @@
+{"teamList": [
+    {
+        "playerList": [{"name": "Stephen Curry"}],
+        "name": "benny"
+    },
+    {
+        "playerList": [{"name": "Lebron James"}],
+        "name": "brady"
+    },
+    {
+        "playerList": [{"name": "Luka Doncic"}],
+        "name": "bgt"
+    },
+    {
+        "playerList": [
+            {"name": "Kawhi Leonard"},
+            {"name": "James Harden"}
+        ],
+        "name": "bobby"
+    }
+]}
