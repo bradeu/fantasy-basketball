@@ -39,31 +39,6 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-//    // EFFECTS: parses workroom from JSON object and returns it
-//    private Team parseTeam(JSONObject jsonObject) {
-//        String name = jsonObject.getString("name");
-//        Team team = new Team(name);
-//        addPlayers(team, jsonObject);
-//        return team;
-//    }
-//
-//    // MODIFIES: wr
-//    // EFFECTS: parses thingies from JSON object and adds them to workroom
-//    private void addPlayers(Team team, JSONObject jsonObject) {
-//        JSONArray jsonArray = jsonObject.getJSONArray("players");
-//        for (Object json : jsonArray) {
-//            JSONObject nextPlayer = (JSONObject) json;
-//            addPlayer(team, nextPlayer);
-//        }
-//    }
-//
-//    // MODIFIES: wr
-//    // EFFECTS: parses thingy from JSON object and adds it to workroom
-//    private void addPlayer(Team team, JSONObject jsonObject) {
-//        String name = jsonObject.getString("name");
-//        team.addPlayer(name);
-//    }
-
     private Game parseGame(JSONObject jsonObject) {
         Game game = new Game();
         for (Object json1 : jsonObject.getJSONArray("teamList")) {

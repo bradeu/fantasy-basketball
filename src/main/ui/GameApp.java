@@ -27,9 +27,8 @@ public class GameApp {
     //EFFECTS: runs the game based on the user input whether to show the teams or play the game or quit application
     public void runApp() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter number of players per team:");
-        int playerAmt = scanner.nextInt();
-        Game game = makeGame(playerAmt);
+        int playerAmt;
+        Game game = new Game();
         int response;
         do {
             System.out.println("Please enter a number:\n(1)Play game\n(2)Show team\n(3)Add team\n(4)Load previous game\n(5)Save game\n(6)Quit application");
@@ -42,6 +41,8 @@ public class GameApp {
                     game.getTeamList().forEach(team -> System.out.println(team.getName()));
                     break;
                 case 3:
+                    System.out.println("Enter number of players for this team:");
+                    playerAmt = scanner.nextInt();
                     game = addTeam(game, playerAmt);
                     break;
                 case 4:
@@ -98,22 +99,6 @@ public class GameApp {
             }
         }
         System.out.println(winner.getName() + " wins the game !");
-    }
-
-    //EFFECTS: prompt the user to enter number of teams, player(s) per team, team name(s), and player names and
-    //         make the game with that specifications
-    public Game makeGame(int playerAmt) {
-        Scanner scanner = new Scanner(System.in);
-        Game game = new Game();
-
-        System.out.println("Enter number of team(s):");
-        int teamAmt = scanner.nextInt();
-        scanner.nextLine();
-
-        for (int index = 0; index < teamAmt; index++) {
-            game = addTeam(game, playerAmt);
-        }
-        return game;
     }
 
     // EFFECTS: adds a team with the playerAmt into the game
