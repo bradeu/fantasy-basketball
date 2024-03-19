@@ -48,7 +48,6 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
         cards.add(createWelcomePanel(), "Welcome Panel");
         cards.add(createAddTeamPanel(), "Add Team");
-        cards.add(createAddTeamExtendedPanel(), "Add Team Extended");
         cards.add(createShowTeamsPanel(), "Show Teams");
         cards.add(createLoadGamePanel(), "Load Game");
         cards.add(createSaveGamePanel(), "Save Game");
@@ -80,8 +79,13 @@ public class GameAppGUI extends JFrame implements ActionListener {
         JButton enterButton = new JButton("Enter");
         enterButton.addActionListener(e -> {
             teamName = nameField.getText();
-            numPlayer = Integer.valueOf(numField.getText());
-            cardLayout.show(cards, "Add Team Extended");
+            try {
+                numPlayer = Integer.parseInt(numField.getText());
+                cards.add(createAddTeamExtendedPanel(), "Add Team Extended");
+                cardLayout.show(cards, "Add Team Extended");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid number of players.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         panel.add(nameLabel);
@@ -111,6 +115,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             for (JTextField textField : textFieldList) {
                 team.addPlayer(textField.getText());
             }
+            game.addTeam(team);
         });
         panel.add(enterButton);
         return panel;
