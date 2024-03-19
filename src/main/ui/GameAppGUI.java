@@ -22,6 +22,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
     private JLabel label;
     private CardLayout cardLayout;
     private JPanel cards;
+    private String teamName;
+    private int numPlayer;
 
     public GameAppGUI() {
         super("Basketball Game App");
@@ -46,14 +48,13 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
         cards.add(createWelcomePanel(), "Welcome Panel");
         cards.add(createAddTeamPanel(), "Add Team");
+        cards.add(createAddTeamExtendedPanel(), "Add Team Extended");
         cards.add(createShowTeamsPanel(), "Show Teams");
         cards.add(createLoadGamePanel(), "Load Game");
         cards.add(createSaveGamePanel(), "Save Game");
         cards.add(createPlayGamePanel(), "Play Game");
 
-
         getContentPane().add(cards, BorderLayout.CENTER);
-
         setMenu();
 
         pack();
@@ -72,23 +73,46 @@ public class GameAppGUI extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Enter team name:");
-        JTextField textField = new JTextField(10);
-        JButton addButton = new JButton("Add Team");
-        addButton.addActionListener(e -> {
-            String teamName = textField.getText();
-            if (!teamName.isEmpty()) {
-                Team team = new Team(teamName);
-                game.addTeam(team);
-                textField.setText("");
-                JOptionPane.showMessageDialog(this, "Team added: " + teamName);
-            }
+        JLabel nameLabel = new JLabel("Enter team name:");
+        JTextField nameField = new JTextField(10);
+        JLabel numLabel = new JLabel("Enter number of players:");
+        JTextField numField = new JTextField(10);
+        JButton enterButton = new JButton("Enter");
+        enterButton.addActionListener(e -> {
+            teamName = nameField.getText();
+            numPlayer = Integer.valueOf(numField.getText());
+            cardLayout.show(cards, "Add Team Extended");
         });
 
-        panel.add(label);
-        panel.add(textField);
-        panel.add(addButton);
+        panel.add(nameLabel);
+        panel.add(nameField);
+        panel.add(numLabel);
+        panel.add(numField);
+        panel.add(enterButton);
 
+        return panel;
+    }
+
+    private JPanel createAddTeamExtendedPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JLabel label = new JLabel("Enter players name:");
+        panel.add(label);
+
+        ArrayList<JTextField> textFieldList = new ArrayList<>();
+        for (int i = 0; i < numPlayer; i++) {
+            JTextField textField = new JTextField(10);
+            panel.add(textField);
+            textFieldList.add(textField);
+        }
+        JButton enterButton = new JButton("Enter");
+        enterButton.addActionListener(e -> {
+            Team team = new Team(teamName);
+            for (JTextField textField : textFieldList) {
+                team.addPlayer(textField.getText());
+            }
+        });
+        panel.add(enterButton);
         return panel;
     }
 
@@ -145,26 +169,31 @@ public class GameAppGUI extends JFrame implements ActionListener {
     }
 
     public JPanel createPlayGamePanel() {
-        ArrayList<Team> teamList = game.getTeamList();
-        Team winner = null;
+        JPanel panel = new JPanel(new BorderLayout());
+        JButton playButton = new JButton("Play Game");
+        label = new JLabel("Click the button below to get prediction!");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        playButton.addActionListener(e -> {
+            ArrayList<Team> teamList = game.getTeamList();
+            Team winner = null;
 
-        if (teamList.size() >= 2) {
-            winner = teamList.get(0);
-            for (int i = 1; i < teamList.size(); i++) {
-                Team team = teamList.get(i);
-                if (team.getRating() > winner.getRating()) {
-                    winner = team;
+            if (teamList.size() >= 2) {
+                winner = teamList.get(0);
+                for (int i = 1; i < teamList.size(); i++) {
+                    Team team = teamList.get(i);
+                    if (team.getRating() > winner.getRating()) {
+                        winner = team;
+                    }
                 }
             }
-        }
-
-        JPanel panel = new JPanel();
-        if (winner != null) {
-            label = new JLabel(winner.getName() + " wins the game!");
-        } else {
-            label = new JLabel("Not Enough Teams!");
-        }
-        panel.add(label);
+            if (winner != null) {
+                label.setText(winner.getName() + " wins the game!");
+            } else {
+                label.setText("Not Enough Teams!");
+            }
+        });
+        panel.add(label, BorderLayout.CENTER);
+        panel.add(playButton, BorderLayout.SOUTH);
         return panel;
     }
 
