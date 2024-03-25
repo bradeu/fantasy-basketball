@@ -25,18 +25,21 @@ public class GameAppGUI extends JFrame implements ActionListener {
     private String teamName;
     private int numPlayer;
 
+    // EFFECTS : Create Game Application Graphical User Interface
     public GameAppGUI() {
-        super("Basketball Game App");
+        super("Fantasy Basketball Game App");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         initGame();
         initGUI();
     }
 
+    // EFFECTS : Initializes Game
     private void initGame() {
         game = new Game();
     }
 
+    // EFFECTS : Initializes Graphical User Interface
     private void initGUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1080, 1080));
@@ -62,12 +65,15 @@ public class GameAppGUI extends JFrame implements ActionListener {
         setResizable(false);
     }
 
+    // EFFECTS : Create a new panel for Welcome page
     private JPanel createWelcomePanel() {
         JPanel panel = new JPanel();
-        panel.add(new JLabel("Welcome to the Basketball Game App!"));
+        panel.add(new JLabel("Welcome to the Fantasy Basketball Game App!"));
         return panel;
     }
 
+    // MODIFIES: game
+    // EFFECTS : Create a new panel for adding teams with team name and number of players
     private JPanel createAddTeamPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -97,6 +103,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
+    // MODIFIES: game
+    // EFFECTS: Create a new panel for adding teams with player names
     private JPanel createAddTeamExtendedPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -116,11 +124,23 @@ public class GameAppGUI extends JFrame implements ActionListener {
                 team.addPlayer(textField.getText());
             }
             game.addTeam(team);
+            cards.add(createAddTeamExtendedPanelPartTwo(), "Add Team Extended Part Two");
+            cardLayout.show(cards, "Add Team Extended Part Two");
         });
         panel.add(enterButton);
         return panel;
     }
 
+    // MODIFIES: game
+    // EFFECTS: Create a new panel for after adding team
+    private JPanel createAddTeamExtendedPanelPartTwo() {
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("Successfully Created!");
+        panel.add(label, BorderLayout.CENTER);
+        return panel;
+    }
+
+    // EFFECTS: Create a panel for showing teams
     private JPanel createShowTeamsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         JTextArea textArea = new JTextArea(15, 30);
@@ -141,7 +161,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
-    public JPanel createLoadGamePanel() {
+    // EFFECTS: Create a panel for Load game
+    private JPanel createLoadGamePanel() {
         JPanel panel = new JPanel();
         JButton loadButton = new JButton("Load Game Data");
         loadButton.addActionListener(e -> {
@@ -156,7 +177,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
-    public JPanel createSaveGamePanel() {
+    // MODIFIES: JSON_STORE
+    // EFFECTS: Create a panel for Save game
+    private JPanel createSaveGamePanel() {
         JPanel panel = new JPanel();
         JButton saveButton = new JButton("Save Game Data");
         saveButton.addActionListener(e -> {
@@ -173,7 +196,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
-    public JPanel createPlayGamePanel() {
+    // EFFECTS: Create a panel to play the game
+    private JPanel createPlayGamePanel() {
         JPanel panel = new JPanel(new BorderLayout());
         JButton playButton = new JButton("Play Game");
         label = new JLabel("Click the button below to get prediction!");
@@ -202,10 +226,12 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
-    public void quitApp() {
+    // EFFECTS: Quits app
+    private void quitApp() {
         System.exit(0);
     }
 
+    // EFFECTS: Creates a menu bar with menu items
     private void setMenu() {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -240,6 +266,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         quitApp.addActionListener(this);
     }
 
+    // EFFECTS: Shows cards based on button pressed
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -268,6 +295,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: Starts game graphical user interface
     public static void main(String[] args) {
         new GameAppGUI();
     }
