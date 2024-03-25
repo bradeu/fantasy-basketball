@@ -75,33 +75,51 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: game
     // EFFECTS : Create a new panel for adding teams with team name and number of players
     private JPanel createAddTeamPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        JLabel nameLabel = new JLabel("Enter team name:");
-        JTextField nameField = new JTextField(10);
-        JLabel numLabel = new JLabel("Enter number of players:");
-        JTextField numField = new JTextField(10);
-        JButton enterButton = new JButton("Enter");
-        enterButton.addActionListener(e -> {
-            teamName = nameField.getText();
-            try {
-                numPlayer = Integer.parseInt(numField.getText());
-                cards.add(createAddTeamExtendedPanel(), "Add Team Extended");
-                cardLayout.show(cards, "Add Team Extended");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid number of players.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
-        panel.add(nameLabel);
-        panel.add(nameField);
-        panel.add(numLabel);
-        panel.add(numField);
+        JPanel panel = createPanelWithBoxLayout(BoxLayout.Y_AXIS);
+        JTextField nameField = addLabelAndTextField(panel, "Enter team name:");
+        JTextField numField = addLabelAndTextField(panel, "Enter number of players:");
+        JButton enterButton = createEnterButton(nameField, numField);
         panel.add(enterButton);
-
         return panel;
     }
+
+    // EFFECTS: Creates a panel with a specified BoxLayout orientation
+    private JPanel createPanelWithBoxLayout(int axis) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, axis));
+        return panel;
+    }
+
+    // EFFECTS: Adds a label and a text field to a panel, and returns the text field
+    private JTextField addLabelAndTextField(JPanel panel, String labelText) {
+        JLabel label = new JLabel(labelText);
+        JTextField textField = new JTextField(10);
+        panel.add(label);
+        panel.add(textField);
+        return textField;
+    }
+
+    // EFFECTS: Creates and returns an enter button with action listener
+    private JButton createEnterButton(JTextField nameField, JTextField numField) {
+        JButton enterButton = new JButton("Enter");
+        enterButton.addActionListener(e -> handleEnterAction(nameField, numField));
+        return enterButton;
+    }
+
+    // MODIFIES: this
+// EFFECTS: Handles the action for the enter button
+    private void handleEnterAction(JTextField nameField, JTextField numField) {
+        teamName = nameField.getText();
+        try {
+            numPlayer = Integer.parseInt(numField.getText());
+            cards.add(createAddTeamExtendedPanel(), "Add Team Extended");
+            cardLayout.show(cards, "Add Team Extended");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter a valid number of players.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     // MODIFIES: game
     // EFFECTS: Create a new panel for adding teams with player names
@@ -168,9 +186,11 @@ public class GameAppGUI extends JFrame implements ActionListener {
         loadButton.addActionListener(e -> {
             try {
                 game = jsonReader.read();
-                JOptionPane.showMessageDialog(this, "Game loaded successfully.", "Load Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Game loaded successfully.", "Load Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(this, "Failed to load game data.", "Load Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Failed to load game data.", "Load Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(loadButton);
@@ -187,9 +207,11 @@ public class GameAppGUI extends JFrame implements ActionListener {
                 jsonWriter.open();
                 jsonWriter.write(game);
                 jsonWriter.close();
-                JOptionPane.showMessageDialog(this, "Game saved successfully.", "Save Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Game saved successfully.", "Save Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException fileNotFoundException) {
-                JOptionPane.showMessageDialog(this, "Failed to save game data.", "Save Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Failed to save game data.", "Save Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(saveButton);
@@ -202,29 +224,35 @@ public class GameAppGUI extends JFrame implements ActionListener {
         JButton playButton = new JButton("Play Game");
         label = new JLabel("Click the button below to get prediction!");
         label.setHorizontalAlignment(JLabel.CENTER);
-        playButton.addActionListener(e -> {
-            ArrayList<Team> teamList = game.getTeamList();
-            Team winner = null;
-
-            if (teamList.size() >= 2) {
-                winner = teamList.get(0);
-                for (int i = 1; i < teamList.size(); i++) {
-                    Team team = teamList.get(i);
-                    if (team.getRating() > winner.getRating()) {
-                        winner = team;
-                    }
-                }
-            }
-            if (winner != null) {
-                label.setText(winner.getName() + " wins the game!");
-            } else {
-                label.setText("Not Enough Teams!");
-            }
-        });
+        playButton.addActionListener(e -> updateGamePrediction());
         panel.add(label, BorderLayout.CENTER);
         panel.add(playButton, BorderLayout.SOUTH);
         return panel;
     }
+
+    // MODIFIES: this
+    // EFFECTS: Updates game prediction based on team ratings and updates the label
+    private void updateGamePrediction() {
+        Team winner = determineWinner(game.getTeamList());
+        String message = (winner != null) ? winner.getName() + " wins the game!" : "Not Enough Teams!";
+        label.setText(message);
+    }
+
+    // EFFECTS: Determines the winning team based on ratings, returns null if not enough teams
+    private Team determineWinner(ArrayList<Team> teamList) {
+        if (teamList.size() < 2) {
+            return null;
+        }
+        Team winner = teamList.get(0);
+        for (int i = 1; i < teamList.size(); i++) {
+            Team team = teamList.get(i);
+            if (team.getRating() > winner.getRating()) {
+                winner = team;
+            }
+        }
+        return winner;
+    }
+
 
     // EFFECTS: Quits app
     private void quitApp() {
@@ -234,37 +262,31 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // EFFECTS: Creates a menu bar with menu items
     private void setMenu() {
         JMenuBar menuBar = new JMenuBar();
+        JMenu menu = createMenu(menuBar, "Menu");
+        addMenuItem(menu, "Play Game", "playGame");
+        addMenuItem(menu, "Show Teams", "showTeams");
+        addMenuItem(menu, "Add Team", "addTeam");
+        addMenuItem(menu, "Load Game", "loadGame");
+        addMenuItem(menu, "Save Game", "saveGame");
+        addMenuItem(menu, "Quit", "quitApp");
         setJMenuBar(menuBar);
-        JMenu menu = new JMenu("Menu");
-        menuBar.add(menu);
-
-        JMenuItem playGame = new JMenuItem("Play Game");
-        JMenuItem showTeams = new JMenuItem("Show Teams");
-        JMenuItem addTeam = new JMenuItem("Add Team");
-        JMenuItem loadGame = new JMenuItem("Load Game");
-        JMenuItem saveGame = new JMenuItem("Save Game");
-        JMenuItem quitApp = new JMenuItem("Quit");
-
-        menu.add(playGame);
-        menu.add(showTeams);
-        menu.add(addTeam);
-        menu.add(loadGame);
-        menu.add(saveGame);
-        menu.add(quitApp);
-
-        playGame.setActionCommand("playGame");
-        playGame.addActionListener(this);
-        showTeams.setActionCommand("showTeams");
-        showTeams.addActionListener(this);
-        addTeam.setActionCommand("addTeam");
-        addTeam.addActionListener(this);
-        loadGame.setActionCommand("loadGame");
-        loadGame.addActionListener(this);
-        saveGame.setActionCommand("saveGame");
-        saveGame.addActionListener(this);
-        quitApp.setActionCommand("quitApp");
-        quitApp.addActionListener(this);
     }
+
+    // EFFECTS: Creates and returns a new JMenu added to the menuBar
+    private JMenu createMenu(JMenuBar menuBar, String title) {
+        JMenu menu = new JMenu(title);
+        menuBar.add(menu);
+        return menu;
+    }
+
+    // EFFECTS: Creates a JMenuItem and adds it to the menu
+    private void addMenuItem(JMenu menu, String title, String actionCommand) {
+        JMenuItem menuItem = new JMenuItem(title);
+        menuItem.setActionCommand(actionCommand);
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+    }
+
 
     // EFFECTS: Shows cards based on button pressed
     @Override
