@@ -1,6 +1,7 @@
 package ui;
 
 import model.Game;
+import model.Player;
 import model.Team;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -44,6 +45,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1080, 1080));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        getContentPane().setBackground(Color.CYAN);
         setLayout(new FlowLayout());
 
         cardLayout = new CardLayout();
@@ -52,6 +54,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         cards.add(createWelcomePanel(), "Welcome Panel");
         cards.add(createAddTeamPanel(), "Add Team");
         cards.add(createShowTeamsPanel(), "Show Teams");
+        cards.add(createShowPLayersPanel(), "Show Players");
         cards.add(createLoadGamePanel(), "Load Game");
         cards.add(createSaveGamePanel(), "Save Game");
         cards.add(createPlayGamePanel(), "Play Game");
@@ -68,7 +71,22 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // EFFECTS : Create a new panel for Welcome page
     private JPanel createWelcomePanel() {
         JPanel panel = new JPanel();
-        panel.add(new JLabel("Welcome to the Fantasy Basketball Game App!"));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JLabel welcomeLabel = new JLabel("Welcome to the Fantasy Basketball Game App!", JLabel.CENTER);
+        ImageIcon imageIcon = new ImageIcon("./static/Dunk.png");
+
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+
+        JLabel label = new JLabel(imageIcon);
+        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 17));
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
+        panel.add(welcomeLabel);
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
+        panel.add(label);
         return panel;
     }
 
@@ -152,8 +170,10 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: game
     // EFFECTS: Create a new panel for after adding team
     private JPanel createAddTeamExtendedPanelPartTwo() {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel("Successfully Created!");
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel("Successfully Created!", JLabel.CENTER);
+        label.setFont(new Font("Serif", Font.BOLD, 15));
+        label.setVerticalAlignment(JLabel.CENTER);
         panel.add(label, BorderLayout.CENTER);
         return panel;
     }
@@ -179,10 +199,51 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
+    private JPanel createShowPLayersPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        JTextArea textArea = new JTextArea(15, 30);
+        textArea.setEditable(false);
+
+        JPanel inputPanel = new JPanel(new FlowLayout());
+        JLabel label = new JLabel("Enter team name:");
+        JTextField textField = new JTextField(10);
+        inputPanel.add(label);
+        inputPanel.add(textField);
+
+        JButton showButton = new JButton("Show");
+
+        showButton.addActionListener(e -> {
+            String teamName = textField.getText();
+            Team teamFound = null;
+            for (Team team : game.getTeamList()) {
+                if (team.getName().equals(teamName)) {
+                    teamFound = team;
+                }
+            }
+            textArea.setText("");
+            if (teamFound == null) {
+                textArea.append("Not Found!");
+            } else {
+                ArrayList<Player> players = teamFound.getPlayerList();
+
+                for (Player player : players) {
+                    textArea.append(player.getName() + "\n");
+                }
+            }
+        });
+
+        panel.add(inputPanel, BorderLayout.NORTH);
+        panel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+        panel.add(showButton, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
     // EFFECTS: Create a panel for Load game
     private JPanel createLoadGamePanel() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
         JButton loadButton = new JButton("Load Game Data");
+        loadButton.setVerticalAlignment(JButton.CENTER);
         loadButton.addActionListener(e -> {
             try {
                 game = jsonReader.read();
@@ -200,8 +261,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: JSON_STORE
     // EFFECTS: Create a panel for Save game
     private JPanel createSaveGamePanel() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
         JButton saveButton = new JButton("Save Game Data");
+        saveButton.setVerticalAlignment(JButton.CENTER);
         saveButton.addActionListener(e -> {
             try {
                 jsonWriter.open();
@@ -265,6 +327,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         JMenu menu = createMenu(menuBar, "Menu");
         addMenuItem(menu, "Play Game", "playGame");
         addMenuItem(menu, "Show Teams", "showTeams");
+        addMenuItem(menu, "Show Players", "showPlayers");
         addMenuItem(menu, "Add Team", "addTeam");
         addMenuItem(menu, "Load Game", "loadGame");
         addMenuItem(menu, "Save Game", "saveGame");
@@ -299,6 +362,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
                 break;
             case "showTeams":
                 cardLayout.show(cards, "Show Teams");
+                break;
+            case "showPlayers":
+                cardLayout.show(cards, "Show Players");
                 break;
             case "addTeam":
                 cardLayout.show(cards, "Add Team");
