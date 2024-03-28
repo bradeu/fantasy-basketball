@@ -78,8 +78,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
-
         JLabel label = new JLabel(imageIcon);
+
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 17));
         welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -172,8 +172,17 @@ public class GameAppGUI extends JFrame implements ActionListener {
     private JPanel createAddTeamExtendedPanelPartTwo() {
         JPanel panel = new JPanel(new BorderLayout());
         JLabel label = new JLabel("Successfully Created!", JLabel.CENTER);
-        label.setFont(new Font("Serif", Font.BOLD, 15));
+        label.setFont(new Font("Serif", Font.BOLD, 17));
         label.setVerticalAlignment(JLabel.CENTER);
+
+        ImageIcon imageIcon = new ImageIcon("./static/Team.png");
+
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+        JLabel imageLabel = new JLabel(imageIcon);
+
+        panel.add(imageLabel, BorderLayout.NORTH);
         panel.add(label, BorderLayout.CENTER);
         return panel;
     }
@@ -199,6 +208,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return panel;
     }
 
+    // EFFECTS: Shows the players in the team
     private JPanel createShowPLayersPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         JTextArea textArea = new JTextArea(15, 30);
@@ -212,31 +222,27 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
         JButton showButton = new JButton("Show");
 
-        showButton.addActionListener(e -> {
-            String teamName = textField.getText();
-            Team teamFound = null;
-            for (Team team : game.getTeamList()) {
-                if (team.getName().equals(teamName)) {
-                    teamFound = team;
-                }
-            }
-            textArea.setText("");
-            if (teamFound == null) {
-                textArea.append("Not Found!");
-            } else {
-                ArrayList<Player> players = teamFound.getPlayerList();
-
-                for (Player player : players) {
-                    textArea.append(player.getName() + "\n");
-                }
-            }
-        });
+        showButton.addActionListener(e -> updateTextAreaWithPlayers(textArea, textField.getText()));
 
         panel.add(inputPanel, BorderLayout.NORTH);
         panel.add(new JScrollPane(textArea), BorderLayout.CENTER);
         panel.add(showButton, BorderLayout.SOUTH);
 
         return panel;
+    }
+
+    // EFFECTS: Searches the team and append the players in that team to the text area
+    private void updateTextAreaWithPlayers(JTextArea textArea, String teamName) {
+        textArea.setText("");
+        for (Team team : game.getTeamList()) {
+            if (team.getName().equals(teamName)) {
+                for (Player player : team.getPlayerList()) {
+                    textArea.append(player.getName() + "\n");
+                }
+                return;
+            }
+        }
+        textArea.append("Team not found!");
     }
 
     // EFFECTS: Create a panel for Load game
@@ -287,6 +293,15 @@ public class GameAppGUI extends JFrame implements ActionListener {
         label = new JLabel("Click the button below to get prediction!");
         label.setHorizontalAlignment(JLabel.CENTER);
         playButton.addActionListener(e -> updateGamePrediction());
+
+        ImageIcon imageIcon = new ImageIcon("./static/Win.png");
+
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(170, 170,  java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+        JLabel imageLabel = new JLabel(imageIcon);
+
+        panel.add(imageLabel, BorderLayout.NORTH);
         panel.add(label, BorderLayout.CENTER);
         panel.add(playButton, BorderLayout.SOUTH);
         return panel;
@@ -355,31 +370,26 @@ public class GameAppGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-
-        switch (command) {
-            case "playGame":
-                cardLayout.show(cards, "Play Game");
+        if ("quitApp".equals(command)) {
+            quitApp();
+        } else {
+            String cardName = "";
+            switch (command) {
+                case "playGame": cardName = "Play Game";
                 break;
-            case "showTeams":
-                cardLayout.show(cards, "Show Teams");
+                case "showTeams": cardName = "Show Teams";
                 break;
-            case "showPlayers":
-                cardLayout.show(cards, "Show Players");
+                case "showPlayers": cardName = "Show Players";
                 break;
-            case "addTeam":
-                cardLayout.show(cards, "Add Team");
+                case "addTeam": cardName = "Add Team";
                 break;
-            case "loadGame":
-                cardLayout.show(cards, "Load Game");
+                case "loadGame": cardName = "Load Game";
                 break;
-            case "saveGame":
-                cardLayout.show(cards, "Save Game");
+                case "saveGame": cardName = "Save Game";
                 break;
-            case "quitApp":
-                quitApp();
-                break;
-            default :
-                cardLayout.show(cards, "Welcome Panel");
+                default: cardName = "Welcome Panel";
+            }
+            cardLayout.show(cards, cardName);
         }
     }
 
