@@ -25,10 +25,12 @@ public class Game implements Writable {
     //EFFECTS: adds team into the teamList
     public void addTeam(Team team) {
         teamList.add(team);
+        EventLog.getInstance().logEvent(new Event("Team " + team.getName() + " added to the game"));
     }
 
     //EFFECTS: returns the array teamList
     public ArrayList<Team> getTeamList() {
+        EventLog.getInstance().logEvent(new Event("Team list requested"));
         return teamList;
     }
 

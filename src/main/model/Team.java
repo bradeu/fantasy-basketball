@@ -42,10 +42,12 @@ public class Team implements Writable {
         Player player = findPlayerByName(filePath, playerName);
         playerList.add(player);
         rating += player.getSs();
+        EventLog.getInstance().logEvent(new Event(playerName + " added to the team"));
     }
 
     //EFFECTS: return the list of player in the team
     public ArrayList<Player> getPlayerList() {
+        EventLog.getInstance().logEvent(new Event("Player list requested"));
         return playerList;
     }
 
@@ -66,6 +68,7 @@ public class Team implements Writable {
                     double bpm = Double.parseDouble(parts[6]);
                     double vorp = Double.parseDouble(parts[7]);
                     String pos = parts[8];
+                    EventLog.getInstance().logEvent(new Event(searchName + " found"));
                     return new Player(name, ppg, apg, rpg, per, ws, bpm, vorp, pos);
                 }
             }

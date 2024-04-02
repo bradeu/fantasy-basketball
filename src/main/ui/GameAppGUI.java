@@ -3,6 +3,8 @@ package ui;
 import model.Game;
 import model.Player;
 import model.Team;
+import model.Event;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -396,6 +398,13 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // EFFECTS: Starts game graphical user interface
     public static void main(String[] args) {
         new GameAppGUI();
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                for (Event e : EventLog.getInstance()) {
+                    System.out.println(e.getDescription());
+                }
+            }
+        });
     }
 }
 
