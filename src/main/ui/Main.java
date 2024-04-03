@@ -14,6 +14,7 @@ public class Main {
                 public void run() {
                     for (Event e : EventLog.getInstance()) {
                         System.out.println(e.getDescription());
+                        System.out.println(e.getDate());
                     }
                 }
             });
