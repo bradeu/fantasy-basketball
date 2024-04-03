@@ -17,6 +17,7 @@ public class GameApp {
     private static final String JSON_STORE = "./data/game.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private Game game;
 
     //EFFECTS: runs the basketball game
     public GameApp() throws FileNotFoundException {
@@ -28,7 +29,7 @@ public class GameApp {
     //EFFECTS: runs the game based on the user input whether to show the teams or play the game or quit application
     public void runApp() {
         Scanner scanner = new Scanner(System.in);
-        Game game = new Game();
+        game = new Game();
         int response;
         do {
             displayMenu();
