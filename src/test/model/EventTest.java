@@ -36,4 +36,15 @@ public class EventTest {
     public void testToString() {
         assertEquals(d.toString() + "\n" + "Sensor open at door", e.toString());
     }
+
+    @Test
+    public void testEquals() {
+        assertEquals(false, e.equals(null));
+        assertEquals(false, e.equals(d));
+    }
+
+    @Test
+    public void testHashCode() {
+        assertEquals(13*e.getDate().hashCode()+e.getDescription().hashCode(), e.hashCode());
+    }
 }
