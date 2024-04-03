@@ -43,7 +43,7 @@ other.
 
 # Phase 4: Task 2
 
-Run the game and Load Game.
+Run the game and Load Game then Quit Game.
 
 Luka Doncic found
 Luka Doncic added to the team
