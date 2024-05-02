@@ -97,7 +97,9 @@ Wed Apr 03 16:46:39 PDT 2024
 
 <br>
 <br>
+
 **If you had more time to work on the project, what refactoring might you use to improve your design?**
+
 <br>
 <br>
 I think one issue in this project that I forgot to anticipate from the beginning is the placement of the simulate game function. 
