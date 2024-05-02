@@ -30,5 +30,20 @@
     {
         "playerList": [{"name": "Kawhi Leonard"}],
         "name": "shubh"
+    },
+    {
+        "playerList": [
+            {"name": "Stephen Curry"},
+            {"name": "Lebron James"}
+        ],
+        "name": "bobby"
+    },
+    {
+        "playerList": [
+            {"name": "Stephen Curry"},
+            {"name": "Lebron James"},
+            {"name": "Luka Doncic"}
+        ],
+        "name": "ben"
     }
 ]}
